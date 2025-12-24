@@ -1,0 +1,131 @@
+ <h2>START <br>
+  ↓
+Open Web Page Maker <br>
+  ↓
+Enter Name & Page Title<br>
+  ↓
+Select Colors<br>
+  ↓
+Upload Images / Video<br>
+  ↓
+Click Submit<br>
+  ↓
+Web Page Generated<br>
+  ↓
+END<br><h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Web Page Maker</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #ddd;
+    padding: 20px;
+}
+
+.container {
+    max-width: 450px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+input, button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+}
+
+button {
+    background: #28a745;
+    color: white;
+    border: none;
+    font-size: 16px;
+}
+
+#result {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+img, video {
+    max-width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Web Page Maker</h1>
+
+<div class="container">
+    <label>Your Name</label>
+    <input type="text" id="name">
+
+    <label>Your Web Page Name</label>
+    <input type="text" id="pagename">
+
+    <label>Background Color</label>
+    <input type="color" id="bg">
+
+    <label>Text Color</label>
+    <input type="color" id="text">
+
+    <label>Upload Images</label>
+    <input type="file" id="images" multiple accept="image/*">
+
+    <label>Upload Video</label>
+    <input type="file" id="video" accept="video/*">
+
+    <button onclick="createPage()">Submit</button>
+</div>
+
+<div id="result">
+    <h2 id="showPage"></h2>
+    <p>Created by <span id="showName"></span></p>
+    <div id="media"></div>
+</div>
+
+<script>
+function createPage() {
+    let result = document.getElementById("result");
+    result.style.display = "block";
+    result.style.backgroundColor = bg.value;
+    result.style.color = text.value;
+
+    showName.innerText = name.value;
+    showPage.innerText = pagename.value;
+
+    let media = document.getElementById("media");
+    media.innerHTML = "";
+
+    for (let file of images.files) {
+        let reader = new FileReader();
+        reader.onload = e => {
+            let img = document.createElement("img");
+            img.src = e.target.result;
+            media.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    if (video.files[0]) {
+        let v = document.createElement("video");
+        v.controls = true;
+        v.src = URL.createObjectURL(video.files[0]);
+        media.appendChild(v);
+    }
+}
+</script>
+
+</body>
+</html>
+
